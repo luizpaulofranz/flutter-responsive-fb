@@ -1,7 +1,6 @@
-# facebook_clone
+# Responsive Facebook clone
 
-A new Flutter project.
-
+This is a UI clone from Facebook with responsiveness for Mobile, Tablets and Desktops, built with flutter.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
