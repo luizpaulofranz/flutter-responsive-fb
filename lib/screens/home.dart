@@ -1,4 +1,6 @@
 import 'package:facebook_clone/components/circle_button.dart';
+import 'package:facebook_clone/components/new_post_form.dart';
+import 'package:facebook_clone/model/data_mock.dart';
 import 'package:facebook_clone/resources/local_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -14,7 +16,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /// We Use CustomScrollView to build a page with slivers
+      /// We need CustomScrollView to build a page with slivers
+      /// inside this, we must use Sliver Widgets, if we try to use commom widgets here we'll get an error
+      /// https://www.youtube.com/watch?v=E3-WdYBrEDc
       body: CustomScrollView(
         slivers: [
           /// This is a specific Sliver to replace AppBar
@@ -26,11 +30,11 @@ class _HomeState extends State<Home> {
             //   background: Image.asset('myasset'),
             // ),
 
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.white,
             // this is the max size of a sliver appBar
             // expandedHeight: 250,
 
-            // This is to make the appBar hide when scroll up, but floating appears again immediately after a scroll up
+            // This is to make the appBar hide when scroll down, but floating appears again immediately after a scroll up
             floating: true,
 
             // instead of floating we could use pinned, to fix the appBar on the top (never hide)
@@ -39,10 +43,11 @@ class _HomeState extends State<Home> {
             title: const Text(
               "facebook",
               style: TextStyle(
-                  color: LocalColors.blueFacebook,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  letterSpacing: -1.2),
+                color: LocalColors.blueFacebook,
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                letterSpacing: -1.2,
+              ),
             ),
             actions: [
               CircleButton(
@@ -57,6 +62,11 @@ class _HomeState extends State<Home> {
               )
             ],
           ),
+          SliverToBoxAdapter(
+            child: NewPostForm(
+              user: currentUser,
+            ),
+          ),
 
           /// This Sliver is like a Container, good to define the screen body
           SliverToBoxAdapter(
@@ -64,7 +74,7 @@ class _HomeState extends State<Home> {
               color: Colors.green,
               height: 2000,
             ),
-          )
+          ),
         ],
       ),
     );
