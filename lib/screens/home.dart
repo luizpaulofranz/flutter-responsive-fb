@@ -1,5 +1,6 @@
 import 'package:facebook_clone/components/circle_button.dart';
 import 'package:facebook_clone/components/new_post_form.dart';
+import 'package:facebook_clone/components/stories_list.dart';
 import 'package:facebook_clone/model/data_mock.dart';
 import 'package:facebook_clone/resources/local_colors.dart';
 import 'package:flutter/material.dart';
@@ -62,13 +63,24 @@ class _HomeState extends State<Home> {
               )
             ],
           ),
+
+          /// This Sliver is like a Container, good to define the screen body
+          // What are your thoughts? form
           SliverToBoxAdapter(
             child: NewPostForm(
               user: currentUser,
             ),
           ),
-
-          /// This Sliver is like a Container, good to define the screen body
+          // Stories carousell
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+            sliver: SliverToBoxAdapter(
+              child: StoriesList(
+                user: currentUser,
+                stories: storiesList,
+              ),
+            ),
+          ),
           SliverToBoxAdapter(
             child: Container(
               color: Colors.green,
