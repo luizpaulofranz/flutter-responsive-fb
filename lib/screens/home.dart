@@ -1,5 +1,6 @@
 import 'package:facebook_clone/components/circle_button.dart';
 import 'package:facebook_clone/components/new_post_form.dart';
+import 'package:facebook_clone/components/post_card.dart';
 import 'package:facebook_clone/components/stories_list.dart';
 import 'package:facebook_clone/model/data_mock.dart';
 import 'package:facebook_clone/resources/local_colors.dart';
@@ -81,10 +82,13 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Container(
-              color: Colors.green,
-              height: 2000,
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final post = posts[index];
+                return PostCard(post: post);
+              },
+              childCount: posts.length,
             ),
           ),
         ],
