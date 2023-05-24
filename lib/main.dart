@@ -1,3 +1,4 @@
+import 'package:facebook_clone/resources/local_colors.dart';
 import 'package:facebook_clone/screens/home.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Facebook',
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: LocalColors.backgroundColor,
+      ),
+      home: const Home(),
     );
   }
 }
