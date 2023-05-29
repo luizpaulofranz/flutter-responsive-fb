@@ -5,25 +5,34 @@ class TabNavigator extends StatelessWidget {
   final List<IconData> icons;
   final int selectedIndex;
   final void Function(int) onTap;
+  final bool bottomIndicator;
 
   const TabNavigator({
     super.key,
     required this.icons,
     required this.selectedIndex,
     required this.onTap,
+    this.bottomIndicator = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TabBar(
         onTap: onTap,
-        indicator: const BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: LocalColors.blueFacebook,
-              width: 3,
-            ),
-          ),
+        indicator: BoxDecoration(
+          border: bottomIndicator
+              ? const Border(
+                  bottom: BorderSide(
+                    color: LocalColors.blueFacebook,
+                    width: 3,
+                  ),
+                )
+              : const Border(
+                  top: BorderSide(
+                    color: LocalColors.blueFacebook,
+                    width: 3,
+                  ),
+                ),
         ),
         tabs: icons
             .asMap()

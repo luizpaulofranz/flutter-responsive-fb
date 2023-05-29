@@ -1,4 +1,7 @@
 import 'package:facebook_clone/components/tab_navigator.dart';
+import 'package:facebook_clone/components/tab_navigator_desktop.dart';
+import 'package:facebook_clone/model/data_mock.dart';
+import 'package:facebook_clone/resources/responsive.dart';
 import 'package:facebook_clone/screens/feed.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
@@ -33,6 +36,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop = Responsive.isDesktop(context);
+    Size screenSize = MediaQuery.of(context).size;
+
     return DefaultTabController(
       length: _icons.length,
       child: Scaffold(
@@ -40,17 +46,36 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           physics: const NeverScrollableScrollPhysics(),
           children: _screens,
         ),
-        bottomNavigationBar: SafeArea(
-          child: TabNavigator(
-            selectedIndex: _selectedTabIndex,
-            icons: _icons,
-            onTap: (index) {
-              setState(() {
-                _selectedTabIndex = index;
-              });
-            },
-          ),
-        ),
+        // if Desktop, we show the TabBar on TOPs of screen
+        appBar: isDesktop
+            ? PreferredSize(
+                preferredSize: Size(screenSize.width, 65),
+                child: TabNavigatorDesktop(
+                  user: currentUser,
+                  icons: _icons,
+                  selectedIndex: _selectedTabIndex,
+                  onTap: (index) {
+                    setState(() {
+                      _selectedTabIndex = index;
+                    });
+                  },
+                ),
+              )
+            : null,
+        // if Mobile, we show the TabBar on BOTTOM of screen
+        bottomNavigationBar: isDesktop
+            ? null
+            : SafeArea(
+                child: TabNavigator(
+                  selectedIndex: _selectedTabIndex,
+                  icons: _icons,
+                  onTap: (index) {
+                    setState(() {
+                      _selectedTabIndex = index;
+                    });
+                  },
+                ),
+              ),
       ),
     );
   }

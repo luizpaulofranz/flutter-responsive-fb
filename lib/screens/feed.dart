@@ -61,7 +61,7 @@ class _FeedState extends State<Feed> {
                 icon: LineIcons.facebookMessenger,
                 iconSize: 30,
                 onPressed: () {},
-              )
+              ),
             ],
           ),
 
