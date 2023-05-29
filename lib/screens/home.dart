@@ -1,97 +1,56 @@
-import 'package:facebook_clone/components/circle_button.dart';
-import 'package:facebook_clone/components/new_post_form.dart';
-import 'package:facebook_clone/components/post_card.dart';
-import 'package:facebook_clone/components/stories_list.dart';
-import 'package:facebook_clone/model/data_mock.dart';
-import 'package:facebook_clone/resources/local_colors.dart';
+import 'package:facebook_clone/components/tab_navigator.dart';
+import 'package:facebook_clone/screens/feed.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:line_icons/line_icon.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
+  final _screens = [
+    const Feed(),
+    const Scaffold(backgroundColor: Colors.purple),
+    const Scaffold(backgroundColor: Colors.yellow),
+    const Scaffold(backgroundColor: Colors.green),
+    const Scaffold(backgroundColor: Colors.blue),
+    const Scaffold(backgroundColor: Colors.black54),
+  ];
+
+  final _icons = <IconData>[
+    Icons.home,
+    Icons.ondemand_video,
+    Icons.storefront_outlined,
+    Icons.flag_outlined,
+    LineIcon.bell().icon!,
+    Icons.menu,
+  ];
+
+  int _selectedTabIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      /// We need CustomScrollView to build a page with slivers
-      /// inside this, we must use Sliver Widgets, if we try to use commom widgets here we'll get an error
-      /// https://www.youtube.com/watch?v=E3-WdYBrEDc
-      body: CustomScrollView(
-        slivers: [
-          /// This is a specific Sliver to replace AppBar
-          /// it has several AppBar + Sliver properties
-          SliverAppBar(
-            // This we can use to show specific widgets when the appBar is expanded
-            // we can set the appBar scrolling effects etc.
-            // flexibleSpace: FlexibleSpaceBar(
-            //   background: Image.asset('myasset'),
-            // ),
-
-            backgroundColor: Colors.white,
-            // this is the max size of a sliver appBar
-            // expandedHeight: 250,
-
-            // This is to make the appBar hide when scroll down, but floating appears again immediately after a scroll up
-            floating: true,
-
-            // instead of floating we could use pinned, to fix the appBar on the top (never hide)
-            // pinned: true,
-            centerTitle: false,
-            title: const Text(
-              "facebook",
-              style: TextStyle(
-                color: LocalColors.blueFacebook,
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                letterSpacing: -1.2,
-              ),
-            ),
-            actions: [
-              CircleButton(
-                icon: Icons.search,
-                iconSize: 30,
-                onPressed: () {},
-              ),
-              CircleButton(
-                icon: LineIcons.facebookMessenger,
-                iconSize: 30,
-                onPressed: () {},
-              )
-            ],
+    return DefaultTabController(
+      length: _icons.length,
+      child: Scaffold(
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          children: _screens,
+        ),
+        bottomNavigationBar: SafeArea(
+          child: TabNavigator(
+            selectedIndex: _selectedTabIndex,
+            icons: _icons,
+            onTap: (index) {
+              setState(() {
+                _selectedTabIndex = index;
+              });
+            },
           ),
-
-          /// This Sliver is like a Container, good to define the screen body
-          // What are your thoughts? form
-          SliverToBoxAdapter(
-            child: NewPostForm(
-              user: currentUser,
-            ),
-          ),
-          // Stories carousell
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
-            sliver: SliverToBoxAdapter(
-              child: StoriesList(
-                user: currentUser,
-                stories: storiesList,
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final post = posts[index];
-                return PostCard(post: post);
-              },
-              childCount: posts.length,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
