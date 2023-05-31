@@ -11,12 +11,23 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  final _scrollController = TrackingScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Responsive(
-        mobile: FeedMobile(),
-        desktop: FeedDesktop(),
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Responsive(
+          mobile: FeedMobile(scrollController: _scrollController),
+          desktop: FeedDesktop(scrollController: _scrollController),
+        ),
       ),
     );
   }

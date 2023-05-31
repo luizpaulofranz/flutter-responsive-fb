@@ -8,7 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class FeedMobile extends StatelessWidget {
-  const FeedMobile({super.key});
+  // we use this guy to leave the user at same point as he was while using 
+  // the desktop version, look the feed.dart and feed_desktop.dart, 
+  // all share the same scroll controller.
+  final TrackingScrollController scrollController;
+
+  const FeedMobile({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +25,7 @@ class FeedMobile extends StatelessWidget {
       /// inside this, we must use Sliver Widgets, if we try to use commom widgets here we'll get an error
       /// https://www.youtube.com/watch?v=E3-WdYBrEDc
       body: CustomScrollView(
+        controller: scrollController,
         slivers: [
           /// This is a specific Sliver to replace AppBar
           /// it has several AppBar + Sliver properties

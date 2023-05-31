@@ -4,6 +4,7 @@ import 'package:facebook_clone/model/data_mock.dart';
 import 'package:facebook_clone/model/story.dart';
 import 'package:facebook_clone/model/user.dart';
 import 'package:facebook_clone/resources/local_colors.dart';
+import 'package:facebook_clone/resources/responsive.dart';
 import 'package:flutter/material.dart';
 
 class StoriesList extends StatelessWidget {
@@ -18,9 +19,10 @@ class StoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = Responsive.isDesktop(context);
     return Container(
       height: 200,
-      color: Colors.white,
+      color: isDesktop ? Colors.transparent : Colors.white,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
         scrollDirection: Axis.horizontal,
