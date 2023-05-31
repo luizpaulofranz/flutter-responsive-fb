@@ -1,15 +1,11 @@
 # Responsive Facebook clone
 
 This is a UI clone from Facebook with responsiveness for Mobile, Tablets and Desktops, built with flutter.
+
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Just donwload the project and run `flutter run`
 
-A few resources to get you started if this is your first Flutter project:
+PS: I leave some studing comments through the code.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## How it looks like
